@@ -118,6 +118,23 @@ public class FirstTest {
                 "Can't find title of the article",
                 15
         );
+
+        assertElementHasText(title_element, "Java (programming language)", "Titles aren't equal");
+    }
+
+    @Test
+    public void testInputFieldHasRightText()
+    {
+        WebElement input_field_element = waitForElementPresent(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Can't find Search Wikipedia input",
+                5
+        );
+
+        assertElementHasText(
+                input_field_element,
+                "Search Wikipedia",
+                "Text in provided element isn't 'Search Wikipedia'");
     }
 
     private WebElement waitForElementPresent(By by, String error_message, long timeOutInSeconds)
@@ -160,5 +177,11 @@ public class FirstTest {
         WebElement element = waitForElementPresent(by, error_message, timeOutInSeconds);
         element.clear();
         return element;
+    }
+
+    private void assertElementHasText(WebElement element, String expectedText, String error_message)
+    {
+        String element_text = element.getAttribute("text");
+        Assert.assertEquals(error_message, expectedText, element_text);
     }
 }
