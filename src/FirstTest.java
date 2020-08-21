@@ -184,6 +184,34 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void testCheckKeywordInSearchResults() {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Can't find Search Wikipedia input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Can't find search input",
+                5
+        );
+
+        driver.hideKeyboard();
+
+        for (int i=0; i<6; i++){
+            String dynamic_xpath = String.format("//*[@resource-id='org.wikipedia:id/page_list_item_container'][@index='%x']//*[contains(@text, 'Java')]", i);
+            int humanReadableIndex = i+1;
+            waitForElementPresent(
+                    By.xpath(dynamic_xpath),
+                    String.format("Article #%x dosn't contain mention of 'Java' word", humanReadableIndex),
+                    5
+            );
+        }
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeOutInSeconds)
     {
         WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
