@@ -138,6 +138,52 @@ public class FirstTest {
     }
 
     @Test
+    public void testSearchForArticlesAndCancelSearch()
+    {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Can't find Search Wikipedia input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Can't find search input",
+                5
+        );
+
+
+        for (int i=0; i<3; i++)
+        {
+            String dynamic_xpath = String.format("//*[@resource-id='org.wikipedia:id/page_list_item_container'][@index='%x']//*[contains(@text, 'Java')]", i);
+            int humanReadableIndex = i+1;
+            waitForElementPresent(
+                    By.xpath(dynamic_xpath),
+                    String.format("There is no article #%x of 3 with mention of 'Java' keyword", humanReadableIndex),
+                    5
+            );
+        }
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_close_btn"),
+                "Search cancel button wasn't found",
+                5
+        );
+
+        waitForElementPresent(
+                By.id("org.wikipedia:id/search_empty_image"),
+                "Search empty image placeholder wasn't found",
+                5
+        );
+
+        waitForElementPresent(
+                By.id("org.wikipedia:id/search_empty_message"),
+                "Search empty message placeholder wasn't found",
+                5
+        );
+    }
+
+    @Test
     public void testCheckKeywordInSearchResults() {
         waitForElementAndClick(
                 By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
