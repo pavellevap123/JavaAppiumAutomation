@@ -417,6 +417,160 @@ public class FirstTest {
     }
 
     @Test
+    public void testSaveTwoArticlesInOneFolder() throws InterruptedException {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Can't find Search Wikipedia input",
+                5
+        );
+
+        String first_search = "Apple";
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                first_search,
+                "Can't find search input",
+                5
+        );
+
+        String first_search_results_text = "American multinational technology company";
+        waitForElementAndClick(
+                By.xpath("//*[@text='" + first_search_results_text + "']"),
+                "Search result with text '" + first_search_results_text + "' wasn't found",
+                15
+        );
+
+        waitForElementPresent(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "Can't find title of the article",
+                15
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageView[@content-desc='More options']"),
+                "Can't find element to open article options",
+                5
+        );
+
+        waitForOneSecond();
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='Add to reading list']"),
+                "Can't find option to add an article to reading list",
+                5
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/onboarding_button"),
+                "Can't find 'Got it' tip overlay",
+                5
+        );
+
+        waitForElementAndClear(
+                By.id("org.wikipedia:id/text_input"),
+                "Can't find overlay input field",
+                5
+        );
+
+        String name_of_folder = "Tech companies";
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/text_input"),
+                name_of_folder,
+                "Can't find overlay input field to enter provided text",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='OK']"),
+                "Can't press OK button",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
+                "Can't close article by clicking X button",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Can't find Search Wikipedia input",
+                5
+        );
+
+        String second_search = "Google";
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                second_search,
+                "Can't find search input",
+                5
+        );
+
+        String second_search_results_text = "American multinational Internet and technology corporation";
+        waitForElementAndClick(
+                By.xpath("//*[@text='" + second_search_results_text + "']"),
+                "Search result with text '" + second_search_results_text + "' wasn't found",
+                15
+        );
+
+        waitForElementPresent(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "Can't find title of the article",
+                15
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageView[@content-desc='More options']"),
+                "Can't find element to open article options",
+                5
+        );
+
+        waitForOneSecond();
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='Add to reading list']"),
+                "Can't find option to add article to reading list",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='" + name_of_folder + "']"),
+                "Folder '" + name_of_folder + "' with articles wasn't found",
+                15
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
+                "Can't close article by clicking X button",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.FrameLayout[@content-desc='My lists']"),
+                "Can't redirect to 'My lists' screen",
+                5
+        );
+
+        waitForOneSecond();
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='" + name_of_folder + "']"),
+                "Can't find created folder with name '" + name_of_folder,
+                5
+        );
+
+        swipeElementToLeft(
+                By.xpath("//*[@text='" + second_search_results_text + "']"),
+                "Can't swipe cell element to delete it"
+        );
+
+        waitForElementNotPresent(
+                By.xpath("//*[@text='" + second_search_results_text + "']"),
+                "Article with text '" + second_search_results_text + "' was found",
+                5
+        );
+    }
+
+    @Test
     public void testTest() {
         waitForElementAndClick(
                 By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
@@ -556,5 +710,9 @@ public class FirstTest {
            String defaultMessage = "An element '" + by.toString() + "' supposed to be not present";
            throw new AssertionError(defaultMessage + " " + error_message);
         }
+    }
+
+    private void waitForOneSecond() throws InterruptedException {
+        Thread.sleep(1000);
     }
 }
