@@ -1,7 +1,6 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
 
 public class NavigationUI extends MainPageObject {
 
@@ -15,7 +14,7 @@ public class NavigationUI extends MainPageObject {
     public void clickMyLists()
     {
         this.waitForElementAndClick(
-                By.xpath(MY_LISTS_LINK),
+                MY_LISTS_LINK,
                 "Can't redirect to 'My lists' screen",
                 5
         );

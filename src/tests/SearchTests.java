@@ -1,11 +1,8 @@
 package tests;
 
 import lib.CoreTestCase;
-import lib.ui.MainPageObject;
 import lib.ui.SearchPageObject;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 public class SearchTests extends CoreTestCase {
 
@@ -56,22 +53,22 @@ public class SearchTests extends CoreTestCase {
         searchPageObject.assertThereIsNoResultOfSearch();
     }
 
-    @Test
-    public void testInputFieldHasRightText()
-    {
-        MainPageObject mainPageObject = new MainPageObject(driver);
-
-        WebElement input_field_element = mainPageObject.waitForElementPresent(
-                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-                "Can't find Search Wikipedia input",
-                5
-        );
-
-        mainPageObject.assertElementHasText(
-                input_field_element,
-                "Search Wikipedia",
-                "Text in provided element isn't 'Search Wikipedia'");
-    }
+//    @Test
+//    public void testInputFieldHasRightText()
+//    {
+//        MainPageObject mainPageObject = new MainPageObject(driver);
+//
+//        WebElement input_field_element = mainPageObject.waitForElementPresent(
+//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+//                "Can't find Search Wikipedia input",
+//                5
+//        );
+//
+//        mainPageObject.assertElementHasText(
+//                input_field_element,
+//                "Search Wikipedia",
+//                "Text in provided element isn't 'Search Wikipedia'");
+//    }
 
     @Test
     public void testSearchForArticlesAndCancelSearch()
