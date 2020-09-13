@@ -93,4 +93,17 @@ public class SearchTests extends CoreTestCase {
         this.hideKeyboard();
         searchPageObject.assureSearchResultArticlesIncludeKeyword(6, "Java");
     }
+
+    @Test
+    public void testSearchForArticlesWithTitleAndDescription()
+    {
+        SearchPageObject searchPageObject = new SearchPageObject(driver);
+
+        searchPageObject.initSearchInput();
+        searchPageObject.typeSearchLine("Java");
+        this.hideKeyboard();
+        searchPageObject.waitForElementByTitleAndDescription("Java", "Island of Indonesia");
+        searchPageObject.waitForElementByTitleAndDescription("Java (programming language)", "Object-oriented programming language");
+        searchPageObject.waitForElementByTitleAndDescription("JavaScript", "Programming language");
+    }
 }

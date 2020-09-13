@@ -13,7 +13,8 @@ public class SearchPageObject extends MainPageObject {
             SEARCH_EMPTY_RESULT_ELEMENT = "xpath://*[@text='No results found']",
             SEARCH_RESULT_BY_INDEX_WITH_SUBSTRING_TPL = "xpath://*[@resource-id='org.wikipedia:id/page_list_item_container'][@index='{INDEX}']//*[contains(@text, '{SUBSTRING}')]",
             SEARCH_EMPTY_SEARCH_TEXT = "id:org.wikipedia:id/search_empty_message",
-            SEARCH_EMPTY_SEARCH_IMAGE = "id:org.wikipedia:id/search_empty_image";
+            SEARCH_EMPTY_SEARCH_IMAGE = "id:org.wikipedia:id/search_empty_image",
+            SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL = "xpath://*[@text='{TITLE}'][@index='0']/../*[@text='{DESCRIPTION}'][@index='1']";
 
 
     public SearchPageObject(AppiumDriver driver) {
@@ -30,6 +31,12 @@ public class SearchPageObject extends MainPageObject {
     {
         String xpath_with_replaced_substring = SEARCH_RESULT_BY_INDEX_WITH_SUBSTRING_TPL.replace("{SUBSTRING}", substring);
         return xpath_with_replaced_substring.replace("{INDEX}", String.valueOf(index));
+    }
+
+    private static String getResultSearchElementWithTitleAndDescription(String title, String description)
+    {
+        String xpath_with_replaced_title = SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL.replace("{TITLE}", title);
+        return xpath_with_replaced_title.replace("{DESCRIPTION}", description);
     }
     /* TEMPLATE METHODS */
 
@@ -118,5 +125,14 @@ public class SearchPageObject extends MainPageObject {
                 "Search empty image placeholder wasn't found",
                 5
         );
+    }
+
+    public void waitForElementByTitleAndDescription(String title, String description)
+    {
+        String modified_xpath_with_title_and_desc = getResultSearchElementWithTitleAndDescription(title, description);
+        this.waitForElementPresent(
+                modified_xpath_with_title_and_desc,
+                "Element with title '" + title + "' and description '" + description + "' wasn't found",
+                15);
     }
 }
