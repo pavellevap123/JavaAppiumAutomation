@@ -2,19 +2,19 @@ package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
 
-public class SearchPageObject extends MainPageObject {
+abstract public class SearchPageObject extends MainPageObject {
 
-    private static final String
-            SEARCH_INIT_ELEMENT = "xpath://*[contains(@text, 'Search Wikipedia')]",
-            SEARCH_INPUT = "xpath://*[contains(@text, 'Search…')]",
-            SEARCH_CANCEL_BUTTON = "id:org.wikipedia:id/search_close_btn",
-            SEARCH_RESULT_BY_SUBSTRING_TPL = "xpath://*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='{SUBSTRING}']",
-            SEARCH_RESULT_ELEMENT = "xpath://*[@resource-id='org.wikipedia:id/search_results_list']/*[@resource-id='org.wikipedia:id/page_list_item_container']",
-            SEARCH_EMPTY_RESULT_ELEMENT = "xpath://*[@text='No results found']",
-            SEARCH_RESULT_BY_INDEX_WITH_SUBSTRING_TPL = "xpath://*[@resource-id='org.wikipedia:id/page_list_item_container'][@index='{INDEX}']//*[contains(@text, '{SUBSTRING}')]",
-            SEARCH_EMPTY_SEARCH_TEXT = "id:org.wikipedia:id/search_empty_message",
-            SEARCH_EMPTY_SEARCH_IMAGE = "id:org.wikipedia:id/search_empty_image",
-            SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL = "xpath://*[@text='{TITLE}'][@index='0']/../*[@text='{DESCRIPTION}'][@index='1']";
+    protected static String
+            SEARCH_INIT_ELEMENT,
+            SEARCH_INPUT,
+            SEARCH_CANCEL_BUTTON,
+            SEARCH_RESULT_BY_SUBSTRING_TPL,
+            SEARCH_RESULT_ELEMENT,
+            SEARCH_EMPTY_RESULT_ELEMENT,
+            SEARCH_RESULT_BY_INDEX_WITH_SUBSTRING_TPL,
+            SEARCH_EMPTY_SEARCH_TEXT,
+            SEARCH_EMPTY_SEARCH_IMAGE,
+            SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL;
 
 
     public SearchPageObject(AppiumDriver driver) {
@@ -36,6 +36,7 @@ public class SearchPageObject extends MainPageObject {
     private static String getResultSearchElementWithTitleAndDescription(String title, String description)
     {
         String xpath_with_replaced_title = SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL.replace("{TITLE}", title);
+        System.out.println(xpath_with_replaced_title.replace("{DESCRIPTION}", description));
         return xpath_with_replaced_title.replace("{DESCRIPTION}", description);
     }
     /* TEMPLATE METHODS */
