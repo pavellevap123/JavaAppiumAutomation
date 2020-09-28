@@ -31,16 +31,20 @@ abstract public class ArticlePageObject extends MainPageObject{
 
     public WebElement waitForTitleElement()
     {
-        return this.waitForElementPresent(TITLE, "Can't find title of the article", 15);
+        return this.waitForElementPresent(
+                TITLE,
+                "Can't find title of the article",
+                15
+        );
     }
 
     public String getArticleTitle()
     {
-        WebElement title_element = waitForTitleElement();
+        WebElement title_element = this.waitForTitleElement();
         if (Platform.getInstance().isAndroid()) {
             return title_element.getAttribute("text");
         } else {
-            return title_element.getAttribute("name");
+            return title_element.getAttribute("wdName");
         }
     }
 
@@ -146,5 +150,15 @@ abstract public class ArticlePageObject extends MainPageObject{
     {
         this.waitForTitleElement();
         this.assertElementPresent(TITLE, "Title wasn't found on the page");
+    }
+
+    public String returnSomeAttr()
+    {
+        WebElement e = this.waitForTitleElement();
+        if (Platform.getInstance().isAndroid()) {
+            return e.getAttribute("text");
+        } else {
+            return e.getAttribute("wdName");
+        }
     }
 }

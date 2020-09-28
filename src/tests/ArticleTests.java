@@ -19,6 +19,8 @@ public class ArticleTests extends CoreTestCase
 
         ArticlePageObject articlePageObject = ArticlePageObjectFactory.get(driver);
         String article_title = articlePageObject.getArticleTitle();
+        //article_title = articlePageObject.returnSomeAttr();
+        System.out.println(article_title);
 
         assertEquals(
                 "We see unexpected title",

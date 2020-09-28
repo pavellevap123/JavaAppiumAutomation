@@ -15,7 +15,7 @@ abstract public class SearchPageObject extends MainPageObject {
             SEARCH_EMPTY_SEARCH_TEXT,
             SEARCH_EMPTY_SEARCH_IMAGE,
             SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL,
-            CANCEL_SEARCH;
+            SEARCH_CLEAR_TEXT;
 
 
     public SearchPageObject(AppiumDriver driver) {
@@ -136,5 +136,14 @@ abstract public class SearchPageObject extends MainPageObject {
                 modified_xpath_with_title_and_desc,
                 "Element with title '" + title + "' and description '" + description + "' wasn't found",
                 15);
+    }
+
+    public void clickClearButtonInSearchField()
+    {
+        waitForElementAndClick(
+                SEARCH_CLEAR_TEXT,
+                "Can't find clear button in search text field",
+                15
+        );
     }
 }

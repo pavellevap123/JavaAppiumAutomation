@@ -15,6 +15,7 @@ import org.junit.Test;
 public class MyListsTests extends CoreTestCase {
 
     private static final String name_of_folder = "Learning programming";
+    private static final String name_of_folder2 = "Tech companies";
 
     @Test
     public void testSaveFirstArticleToMyList() throws InterruptedException {
@@ -51,7 +52,7 @@ public class MyListsTests extends CoreTestCase {
     }
 
     @Test
-    public void testSaveTwoArticlesInOneFolder() throws InterruptedException {
+    public void testSaveTwoArticles() throws InterruptedException {
         SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
 
         searchPageObject.initSearchInput();
@@ -59,25 +60,38 @@ public class MyListsTests extends CoreTestCase {
         searchPageObject.clickByArticleWithSubstring("Apple Inc.");
 
         ArticlePageObject articlePageObject = ArticlePageObjectFactory.get(driver);
-        articlePageObject.waitForTitleElement();
-        String name_of_folder = "Tech companies";
-        articlePageObject.addArticleToMyListWithOnboarding(name_of_folder);
-        articlePageObject.closeArticle();
 
-        searchPageObject.initSearchInput();
+        if (Platform.getInstance().isAndroid()) {
+            articlePageObject.addArticleToMyListWithOnboarding(name_of_folder2);
+            articlePageObject.closeArticle();
+            searchPageObject.initSearchInput();
+        } else {
+            articlePageObject.addArticleToMySaved();
+            articlePageObject.closeArticle();
+            searchPageObject.clickClearButtonInSearchField();
+        }
+
         searchPageObject.typeSearchLine("Google");
-        searchPageObject.clickByArticleWithSubstring("American technology");
+        searchPageObject.clickByArticleWithSubstring("American");
 
-        articlePageObject.waitForTitleElement();
-        articlePageObject.addArticleToMyListWithoutOnboarding(name_of_folder);
+        if (Platform.getInstance().isAndroid()) {
+            articlePageObject.addArticleToMyListWithoutOnboarding(name_of_folder2);
+        } else {
+            articlePageObject.addArticleToMySaved();
+            articlePageObject.closeArticle();
+            searchPageObject.clickCancelSearch();
+        }
         articlePageObject.closeArticle();
 
         NavigationUI navigationUI = NavigationUIFactory.get(driver);
         navigationUI.clickMyLists();
 
         MyListsPageObject myListsPageObject = MyListsPageObjectFactory.get(driver);
-        //Thread.sleep(1000);
-        myListsPageObject.openFolderByName(name_of_folder);
+        if (Platform.getInstance().isAndroid()) {
+            myListsPageObject.openFolderByName(name_of_folder2);
+        } else {
+            myListsPageObject.closeLoginToSyncPopup();
+        }
         myListsPageObject.swipeByArticleToDelete("Apple Inc.");
     }
 }
