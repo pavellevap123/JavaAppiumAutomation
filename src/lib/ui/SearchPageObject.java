@@ -14,7 +14,8 @@ abstract public class SearchPageObject extends MainPageObject {
             SEARCH_RESULT_BY_INDEX_WITH_SUBSTRING_TPL,
             SEARCH_EMPTY_SEARCH_TEXT,
             SEARCH_EMPTY_SEARCH_IMAGE,
-            SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL;
+            SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL,
+            CANCEL_SEARCH;
 
 
     public SearchPageObject(AppiumDriver driver) {

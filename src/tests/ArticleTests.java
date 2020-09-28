@@ -6,7 +6,6 @@ import lib.ui.SearchPageObject;
 import lib.ui.factories.ArticlePageObjectFactory;
 import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
-import org.openqa.selenium.WebElement;
 
 public class ArticleTests extends CoreTestCase
 {
@@ -42,8 +41,7 @@ public class ArticleTests extends CoreTestCase
     }
 
     @Test
-    public void testAssertTitlePresent()
-    {
+    public void testAssertTitlePresent() {
         SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
 
         searchPageObject.initSearchInput();

@@ -46,7 +46,17 @@ abstract public class ArticlePageObject extends MainPageObject{
 
     public void swipeToFooter()
     {
-        this.swipeUpToFindElement(FOOTER_ELEMENT, "Can't find the end of article", 20);
+        if (Platform.getInstance().isAndroid()) {
+            this.swipeUpToFindElement(
+                    FOOTER_ELEMENT,
+                    "Can't find the end of article",
+                    40);
+        } else {
+            this.swipeUpTillElementAppear(
+                    FOOTER_ELEMENT,
+                    "Can't find the end of article",
+                    40);
+        }
     }
 
     public void addArticleToMyListWithOnboarding(String name_of_folder) throws InterruptedException {
@@ -113,6 +123,14 @@ abstract public class ArticlePageObject extends MainPageObject{
                 "Folder '" + name_of_folder + "' with articles wasn't found",
                 15
         );
+    }
+
+    public void addArticleToMySaved()
+    {
+        this.waitForElementAndClick(
+                OPTIONS_ADD_TO_MY_LIST_BUTTON,
+                "Can't find option to add article to reading list",
+                5);
     }
 
     public void closeArticle()
